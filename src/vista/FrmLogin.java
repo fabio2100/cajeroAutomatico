@@ -202,8 +202,11 @@ public class FrmLogin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this,"No coincide el password");
                 cont ++;
                 if (cont > 3){
-                    JOptionPane.showMessageDialog(this,"Usuario baneado");
-                    this.dispose();
+                    boolean ban = cu.banearUsuario(usuVista);
+                    if (ban == true){
+                        JOptionPane.showMessageDialog(this,"Usuario baneado");
+                        this.dispose();}
+                    
                 }
             }
         }

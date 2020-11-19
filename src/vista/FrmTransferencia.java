@@ -29,8 +29,7 @@ public class FrmTransferencia extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        lblUsuario = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnVolver = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         btnSimple1 = new javax.swing.JButton();
         btnADestinatarios1 = new javax.swing.JButton();
@@ -43,8 +42,13 @@ public class FrmTransferencia extends javax.swing.JFrame {
 
         lblUsuario.setText("user");
 
-        jButton1.setBackground(new java.awt.Color(255, 51, 0));
-        jButton1.setText("Volver");
+        btnVolver.setBackground(new java.awt.Color(255, 51, 0));
+        btnVolver.setText("Volver");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -56,7 +60,7 @@ public class FrmTransferencia extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblUsuario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnVolver)
                 .addGap(16, 16, 16))
         );
         jPanel1Layout.setVerticalGroup(
@@ -66,7 +70,7 @@ public class FrmTransferencia extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lblUsuario)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -76,6 +80,11 @@ public class FrmTransferencia extends javax.swing.JFrame {
         btnSimple1.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
         btnSimple1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSimple1.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        btnSimple1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSimple1ActionPerformed(evt);
+            }
+        });
 
         btnADestinatarios1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/aDestinatarios.png"))); // NOI18N
         btnADestinatarios1.setText("A destinatarios");
@@ -133,7 +142,26 @@ public class FrmTransferencia extends javax.swing.JFrame {
 
     private void btnADestinatarios1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnADestinatarios1ActionPerformed
         // TODO add your handling code here:
+        this.dispose();
+        FrmADestinatarios frmADestinatarios = new FrmADestinatarios();
+        frmADestinatarios.lblUsuario.setText(lblUsuario.getText());
+        frmADestinatarios.setVisible(true);
     }//GEN-LAST:event_btnADestinatarios1ActionPerformed
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        FrmInicio fi = new FrmInicio();
+        fi.setVisible(true);
+    }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void btnSimple1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimple1ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        FrmSimple frmSimple = new FrmSimple();
+        frmSimple.lblUsuario.setText(lblUsuario.getText());
+        frmSimple.setVisible(true);
+    }//GEN-LAST:event_btnSimple1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,10 +201,10 @@ public class FrmTransferencia extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnADestinatarios1;
     private javax.swing.JButton btnSimple1;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnVolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel lblUsuario;
+    public static final javax.swing.JLabel lblUsuario = new javax.swing.JLabel();
     // End of variables declaration//GEN-END:variables
 }

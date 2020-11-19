@@ -76,6 +76,11 @@ public class FrmInicio extends javax.swing.JFrame {
         btnTransferencia.setText("Transferencias");
         btnTransferencia.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnTransferencia.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        btnTransferencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTransferenciaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -124,6 +129,16 @@ public class FrmInicio extends javax.swing.JFrame {
         FrmLogin frmLogin = new FrmLogin();
         frmLogin.setVisible(true);
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
+
+    private void btnTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaActionPerformed
+        // TODO add your handling code here:
+        //this.setVisible(false);
+        this.dispose();
+        FrmTransferencia frmTransferencia = new FrmTransferencia();
+        frmTransferencia.lblUsuario.setText(usuarioSesionTxt.getText());
+        frmTransferencia.setVisible(true);
+        
+    }//GEN-LAST:event_btnTransferenciaActionPerformed
 
     /**
      * @param args the command line arguments

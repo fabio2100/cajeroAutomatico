@@ -32,7 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Destinatarios.findByIddestinatarios", query = "SELECT d FROM Destinatarios d WHERE d.iddestinatarios = :iddestinatarios")
     , @NamedQuery(name = "Destinatarios.findByCbu", query = "SELECT d FROM Destinatarios d WHERE d.cbu = :cbu")
     , @NamedQuery(name = "Destinatarios.findByPersona", query = "SELECT d FROM Destinatarios d WHERE d.persona = :persona")
-    , @NamedQuery(name = "Destinatarios.findByCorreo", query = "SELECT d FROM Destinatarios d WHERE d.correo = :correo")})
+    , @NamedQuery(name = "Destinatarios.findByCorreo", query = "SELECT d FROM Destinatarios d WHERE d.correo = :correo")
+    , @NamedQuery(name = "Destinatarios.findByNombreUsuario", query = "SELECT d FROM Destinatarios d WHERE d.nombreUsuario = :nombreUsuario")})
 public class Destinatarios implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,6 +48,9 @@ public class Destinatarios implements Serializable {
     private String persona;
     @Column(name = "correo")
     private String correo;
+    @Basic(optional = false)
+    @Column(name = "nombreUsuario")
+    private String nombreUsuario;
     @JoinColumn(name = "idtransferencia", referencedColumnName = "idtransferencia")
     @ManyToOne(fetch = FetchType.LAZY)
     private Transferencia idtransferencia;
@@ -56,6 +60,11 @@ public class Destinatarios implements Serializable {
 
     public Destinatarios(Integer iddestinatarios) {
         this.iddestinatarios = iddestinatarios;
+    }
+
+    public Destinatarios(Integer iddestinatarios, String nombreUsuario) {
+        this.iddestinatarios = iddestinatarios;
+        this.nombreUsuario = nombreUsuario;
     }
 
     public Integer getIddestinatarios() {
@@ -88,6 +97,14 @@ public class Destinatarios implements Serializable {
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
     }
 
     public Transferencia getIdtransferencia() {

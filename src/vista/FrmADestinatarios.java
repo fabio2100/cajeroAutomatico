@@ -6,7 +6,10 @@
 package vista;
 
 import controlador.ControlDestinatarios;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.Destinatarios;
+import modelo.Usuario;
 
 /**
  *
@@ -21,6 +24,7 @@ public class FrmADestinatarios extends javax.swing.JFrame {
         initComponents();
         actualizaDestinatarios();
         ocultarCampos();
+        actualizaDebitar();
     }
 
     /**
@@ -39,16 +43,16 @@ public class FrmADestinatarios extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaDestinatario = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        lblCuentaDebitar = new javax.swing.JLabel();
         txtFieldCuentaAcreditar = new javax.swing.JTextField();
         txtFieldConcepto = new javax.swing.JTextField();
         txtFieldImporte = new javax.swing.JTextField();
@@ -107,23 +111,33 @@ public class FrmADestinatarios extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaDestinatario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaDestinatarioMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tablaDestinatario);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Menú", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
-        jButton1.setText("Agregar destinatario");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregar.setText("Agregar destinatario");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAgregarActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Modificar destinatario");
-
-        jButton3.setText("Eliminar destinatario");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setText("Modificar destinatario");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnModificarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar.setText("Eliminar destinatario");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -134,20 +148,20 @@ public class FrmADestinatarios extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(btnAgregar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(btnModificar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton3)
+                .addComponent(btnEliminar)
                 .addContainerGap(96, Short.MAX_VALUE))
         );
 
@@ -163,7 +177,7 @@ public class FrmADestinatarios extends javax.swing.JFrame {
 
         jLabel7.setText("Descripción");
 
-        jLabel8.setText("lblCuentaADebitar");
+        lblCuentaDebitar.setText("lblCuentaADebitar");
 
         btnTransferir.setText("Transferir");
 
@@ -177,7 +191,7 @@ public class FrmADestinatarios extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblCuentaDebitar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -203,7 +217,7 @@ public class FrmADestinatarios extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel8))
+                    .addComponent(lblCuentaDebitar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -283,15 +297,57 @@ public class FrmADestinatarios extends javax.swing.JFrame {
         frmTransferencia.setVisible(true);
     }//GEN-LAST:event_btnVolverActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        String iddestinatarios = String.valueOf(tablaDestinatario.getValueAt(tablaDestinatario.getSelectedRow(),0));
+        ControlDestinatarios cd = new ControlDestinatarios();
+        boolean guardar = cd.eliminarDestinatario(iddestinatarios);
+        if(guardar){
+            JOptionPane.showMessageDialog(this, "Se eliminó correctamente");
+        }else{
+            JOptionPane.showMessageDialog(this,"Error, no se pudo eliminar el destinatario");
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         FrmAgregarDestinatario frmAgregarDestinatario = new FrmAgregarDestinatario();
+        frmAgregarDestinatario.lblUsuario.setText(lblUsuario.getText());
         frmAgregarDestinatario.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void tablaDestinatarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaDestinatarioMouseClicked
+        // TODO add your handling code here:
+        String iddestinatarios = String.valueOf(tablaDestinatario.getValueAt(tablaDestinatario.getSelectedRow(),0));
+        String cbu = String.valueOf(tablaDestinatario.getValueAt(tablaDestinatario.getSelectedRow(),1));
+        String persona = String.valueOf(tablaDestinatario.getValueAt(tablaDestinatario.getSelectedRow(),2));
+        String correo = String.valueOf(tablaDestinatario.getValueAt(tablaDestinatario.getSelectedRow(),3));
+        String idtransferencia = String.valueOf(tablaDestinatario.getValueAt(tablaDestinatario.getSelectedRow(),4));
+        String nombreUsuario = String.valueOf(tablaDestinatario.getValueAt(tablaDestinatario.getSelectedRow(),5));
+        //Colocamos los valores en los labels de la información
+        
+        txtFieldCuentaAcreditar.setText(cbu);
+        
+    }//GEN-LAST:event_tablaDestinatarioMouseClicked
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        String iddestinatarios = String.valueOf(tablaDestinatario.getValueAt(tablaDestinatario.getSelectedRow(),0));
+        String cbu = String.valueOf(tablaDestinatario.getValueAt(tablaDestinatario.getSelectedRow(),1));
+        String persona = String.valueOf(tablaDestinatario.getValueAt(tablaDestinatario.getSelectedRow(),2));
+        String correo = String.valueOf(tablaDestinatario.getValueAt(tablaDestinatario.getSelectedRow(),3));
+        String idtransferencia = String.valueOf(tablaDestinatario.getValueAt(tablaDestinatario.getSelectedRow(),4));
+        String nombreUsuario = String.valueOf(tablaDestinatario.getValueAt(tablaDestinatario.getSelectedRow(),5));
+        
+        FrmModificarDestinatario frmModificarDestinatario = new FrmModificarDestinatario();
+        frmModificarDestinatario.txtFieldCbu.setText(cbu);
+        frmModificarDestinatario.txtFieldNombre.setText(persona);
+        frmModificarDestinatario.txtFieldCorreo.setText(correo);
+        
+        frmModificarDestinatario.lblId.setText(iddestinatarios);
+        frmModificarDestinatario.lblIdTransferencia.setText(idtransferencia);
+        frmModificarDestinatario.setVisible(true);
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -329,23 +385,23 @@ public class FrmADestinatarios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnTransferir;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCuentaDebitar;
     public static final javax.swing.JLabel lblUsuario = new javax.swing.JLabel();
     private javax.swing.JTable tablaDestinatario;
     private javax.swing.JTextField txtFieldConcepto;
@@ -356,9 +412,9 @@ public class FrmADestinatarios extends javax.swing.JFrame {
     
     private void actualizaDestinatarios(){
         DefaultTableModel listaDestinatarios;
-        
+        Usuario usuario = Usuario.getInstance();
         ControlDestinatarios cd = new ControlDestinatarios();
-        listaDestinatarios = cd.listarDestinatarios();
+        listaDestinatarios = cd.listarDestinatarios(usuario.getUsuario());
         
         tablaDestinatario.setModel(listaDestinatarios);
     }
@@ -372,7 +428,16 @@ public class FrmADestinatarios extends javax.swing.JFrame {
         tablaDestinatario.getColumnModel().getColumn(4).setMaxWidth(0);
         tablaDestinatario.getColumnModel().getColumn(4).setMinWidth(0);
         tablaDestinatario.getColumnModel().getColumn(4).setPreferredWidth(0);
+        
+        tablaDestinatario.getColumnModel().getColumn(5).setMaxWidth(0);
+        tablaDestinatario.getColumnModel().getColumn(5).setMinWidth(0);
+        tablaDestinatario.getColumnModel().getColumn(5).setPreferredWidth(0);
     
+    }
+    
+    private void actualizaDebitar(){
+        Usuario usuario = Usuario.getInstance();
+        lblCuentaDebitar.setText((usuario.getUsuario()));
     }
 
 

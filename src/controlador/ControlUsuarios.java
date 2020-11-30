@@ -6,8 +6,12 @@
 package controlador;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Usuario;
@@ -34,8 +38,30 @@ public class ControlUsuarios {
             JOptionPane.showConfirmDialog(null, e);
             DB.cierraConexion();
             return null;
-        }
+        }   
+    }
+    
+    public boolean banearUsuario(String nombreUsuario){
+        BaseDatos bd = new BaseDatos();
+        Connection cnx = bd.estableceConexion();
         
+        try{
+            PreparedStatement ps = cnx.prepareStatement("UPDATE usuario SET banned = 1 WHERE usuario = ?");
+            ps.setString(1, nombreUsuario);
+            int n = ps.executeUpdate();
+            if (n!=0){
+                bd.cierraConexion();
+                return true;
+            }else{
+                ps.close();
+                bd.cierraConexion();
+                return false;      
+            }
+        }catch(SQLException ex){
+            Logger.getLogger(BaseDatos.class.getName()).log(Level.SEVERE,null,ex);
+            return false;
+        }
+    
     }
     
 }

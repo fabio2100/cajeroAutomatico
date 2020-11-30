@@ -6,22 +6,25 @@
 package vista;
 
 import controlador.ControlDestinatarios;
-import java.util.Set;
+import java.util.HashSet;
 import javax.swing.JOptionPane;
 import modelo.Destinatarios;
 import modelo.Transferencia;
+import modelo.Usuario;
 
 /**
  *
  * @author Usuario
  */
-public class FrmAgregarDestinatario extends javax.swing.JFrame {
+public class FrmModificarDestinatario extends javax.swing.JFrame {
 
     /**
-     * Creates new form FrmAgregarDestinatario
+     * Creates new form FrmModificarDestinatario
      */
-    public FrmAgregarDestinatario() {
+    public FrmModificarDestinatario() {
         initComponents();
+        Usuario usuario = Usuario.getInstance();
+        lblUsuario.setText(usuario.getUsuario());
     }
 
     /**
@@ -37,12 +40,11 @@ public class FrmAgregarDestinatario extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtFieldNombre = new javax.swing.JTextField();
-        txtFieldCbu = new javax.swing.JTextField();
-        txtFieldCorreo = new javax.swing.JTextField();
         btnCerrar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,6 +80,14 @@ public class FrmAgregarDestinatario extends javax.swing.JFrame {
 
         lblUsuario.setText("jLabel5");
 
+        lblId.setText("jLabel5");
+
+        lblIdTransferencia.setText("jLabel6");
+
+        jLabel7.setText("Id");
+
+        jLabel8.setText("Id Transferencia");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -86,27 +96,32 @@ public class FrmAgregarDestinatario extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtFieldCorreo))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFieldCbu)
-                            .addComponent(txtFieldNombre)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 221, Short.MAX_VALUE)
-                        .addComponent(btnGuardar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCerrar))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblUsuario)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                        .addComponent(btnGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCerrar)
+                        .addGap(9, 9, 9))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblIdTransferencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtFieldCorreo)
+                            .addComponent(txtFieldCbu)
+                            .addComponent(txtFieldNombre))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -126,12 +141,18 @@ public class FrmAgregarDestinatario extends javax.swing.JFrame {
                     .addComponent(txtFieldCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCerrar)
-                    .addComponent(btnGuardar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblId)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblIdTransferencia)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(lblUsuario))
+                    .addComponent(lblUsuario)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnCerrar))
                 .addContainerGap())
         );
 
@@ -146,9 +167,10 @@ public class FrmAgregarDestinatario extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -156,7 +178,6 @@ public class FrmAgregarDestinatario extends javax.swing.JFrame {
 
     private void txtFieldCbuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldCbuActionPerformed
         // TODO add your handling code here:
-
     }//GEN-LAST:event_txtFieldCbuActionPerformed
 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
@@ -169,24 +190,25 @@ public class FrmAgregarDestinatario extends javax.swing.JFrame {
         String cbu = txtFieldCbu.getText();
         String nombre = txtFieldNombre.getText();
         String correo = txtFieldCorreo.getText();
-        
+
         Transferencia transferencia = new Transferencia();
-        
-        
+
         Destinatarios destinatarios = new Destinatarios();
         destinatarios.setCbu(cbu);
         destinatarios.setPersona(nombre);
         destinatarios.setCorreo(correo);
         destinatarios.setNombreUsuario(lblUsuario.getText());
+        destinatarios.setIddestinatarios(Integer.valueOf(lblId.getText()));
         
         
+
         ControlDestinatarios cd = new ControlDestinatarios();
-        boolean guardar = cd.guardarDestinatario(destinatarios);
+        boolean guardar = cd.modificarDestinatario(destinatarios);
         if(guardar){
-            JOptionPane.showMessageDialog(this, "Se guardó correctamente");
+            JOptionPane.showMessageDialog(this, "Se modificó correctamente");
             this.dispose();
         }else{
-            JOptionPane.showMessageDialog(this,"Error, no se pudo guardar el destinatario");
+            JOptionPane.showMessageDialog(this,"Error, no se pudo modificar el destinatario");
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -207,20 +229,20 @@ public class FrmAgregarDestinatario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmAgregarDestinatario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmModificarDestinatario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmAgregarDestinatario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmModificarDestinatario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmAgregarDestinatario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmModificarDestinatario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmAgregarDestinatario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmModificarDestinatario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmAgregarDestinatario().setVisible(true);
+                new FrmModificarDestinatario().setVisible(true);
             }
         });
     }
@@ -232,10 +254,14 @@ public class FrmAgregarDestinatario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    public static final javax.swing.JLabel lblId = new javax.swing.JLabel();
+    public static final javax.swing.JLabel lblIdTransferencia = new javax.swing.JLabel();
     public static final javax.swing.JLabel lblUsuario = new javax.swing.JLabel();
-    private javax.swing.JTextField txtFieldCbu;
-    private javax.swing.JTextField txtFieldCorreo;
-    private javax.swing.JTextField txtFieldNombre;
+    public static final javax.swing.JTextField txtFieldCbu = new javax.swing.JTextField();
+    public static final javax.swing.JTextField txtFieldCorreo = new javax.swing.JTextField();
+    public static final javax.swing.JTextField txtFieldNombre = new javax.swing.JTextField();
     // End of variables declaration//GEN-END:variables
 }

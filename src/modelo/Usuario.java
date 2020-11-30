@@ -40,6 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByDni", query = "SELECT u FROM Usuario u WHERE u.dni = :dni")
     , @NamedQuery(name = "Usuario.findByCelular", query = "SELECT u FROM Usuario u WHERE u.celular = :celular")})
 public class Usuario implements Serializable {
+    
+    private static final Usuario instance = new Usuario();
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -48,7 +50,7 @@ public class Usuario implements Serializable {
     @Column(name = "idusuario")
     private Integer idusuario;
     @Column(name = "usuario")
-    private String usuario;
+    static String usuario;
     @Column(name = "password")
     private String password;
     @Column(name = "banned")
@@ -66,7 +68,7 @@ public class Usuario implements Serializable {
     @OneToMany(mappedBy = "idusuario", fetch = FetchType.LAZY)
     private List<Cuenta> cuentaList;
 
-    public Usuario() {
+    private Usuario() {
     }
 
     public Usuario(Integer idusuario) {
@@ -179,4 +181,9 @@ public class Usuario implements Serializable {
         return "modelo.Usuario[ idusuario=" + idusuario + " ]";
     }
     
+    
+    //Método getInstance
+    public static Usuario getInstance(){
+        return instance;
+    }
 }

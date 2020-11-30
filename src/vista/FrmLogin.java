@@ -177,9 +177,10 @@ public class FrmLogin extends javax.swing.JFrame {
         usuVista = usuarioTxt.getText();
         passVista = passwordTxt.getText();
         
-        Usuario usuario = new Usuario();
+        Usuario usuario = new Usuario(0);
         usuario.setUsuario(usuVista);
         usuario.setPassword(passVista);
+        
         
         ControlUsuarios cu = new ControlUsuarios();
         DefaultTableModel listaUsuarios = cu.validarUsuario(usuario);
@@ -187,9 +188,17 @@ public class FrmLogin extends javax.swing.JFrame {
         lblIntento.setText(String.valueOf(cont));
         
         int nroFilas = listaUsuarios.getRowCount();
+        
         if (nroFilas == 0){
             JOptionPane.showMessageDialog(this,"No hay usuario registrado");
         }else{
+            if (listaUsuarios.getValueAt(0,3).toString().equals("true")){
+                JOptionPane.showMessageDialog(this,"El usuario se encuentra baneado, por favor contacte al administrador");
+                //this.dispose();
+                System.exit(0);
+            }
+            
+            
             if(listaUsuarios.getValueAt(0, 2).toString().equals(usuario.getPassword())){
                 String usuarioSesion = usuario.getUsuario();
                 

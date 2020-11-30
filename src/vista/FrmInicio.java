@@ -5,17 +5,21 @@
  */
 package vista;
 
+import modelo.Usuario;
+
 /**
  *
  * @author Usuario
  */
 public class FrmInicio extends javax.swing.JFrame {
+    
 
     /**
      * Creates new form FrmInicio
      */
     public FrmInicio() {
         initComponents();
+        
     }
 
     /**
@@ -133,9 +137,10 @@ public class FrmInicio extends javax.swing.JFrame {
     private void btnTransferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransferenciaActionPerformed
         // TODO add your handling code here:
         //this.setVisible(false);
+        Usuario usuario = Usuario.getInstance();
         this.dispose();
         FrmTransferencia frmTransferencia = new FrmTransferencia();
-        frmTransferencia.lblUsuario.setText(usuarioSesionTxt.getText());
+        frmTransferencia.lblUsuario.setText(usuario.getUsuario());
         frmTransferencia.setVisible(true);
         
     }//GEN-LAST:event_btnTransferenciaActionPerformed

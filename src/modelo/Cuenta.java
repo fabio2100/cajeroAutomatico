@@ -80,10 +80,10 @@ public class Cuenta implements Serializable {
     private List<Movimiento> movimientoList;
     @JoinColumn(name = "idbanco", referencedColumnName = "idbanco")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Banco idbanco;
+    private int idbanco;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Usuario idusuario;
+    private int idusuario;
     @OneToMany(mappedBy = "idcuenta", fetch = FetchType.LAZY)
     private List<Pago> pagoList;
 
@@ -193,19 +193,19 @@ public class Cuenta implements Serializable {
         this.movimientoList = movimientoList;
     }
 
-    public Banco getIdbanco() {
+    public int getIdbanco() {
         return idbanco;
     }
 
-    public void setIdbanco(Banco idbanco) {
+    public void setIdbanco(int idbanco) {
         this.idbanco = idbanco;
     }
 
-    public Usuario getIdusuario() {
+    public int getIdusuario() {
         return idusuario;
     }
 
-    public void setIdusuario(Usuario idusuario) {
+    public void setIdusuario(int idusuario) {
         this.idusuario = idusuario;
     }
 

@@ -41,7 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByCelular", query = "SELECT u FROM Usuario u WHERE u.celular = :celular")})
 public class Usuario implements Serializable {
     
-    private static final Usuario instance = new Usuario();
+    private static Usuario instance ;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -184,6 +184,9 @@ public class Usuario implements Serializable {
     
     //Método getInstance
     public static Usuario getInstance(){
-        return instance;
-    }
+        if (instance == null){
+            instance = new Usuario();}
+        else{
+            System.out.println("Ya ha sido creado un objeto usuario");}
+        return instance;}
 }

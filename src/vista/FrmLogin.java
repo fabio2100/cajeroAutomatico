@@ -21,6 +21,8 @@ public class FrmLogin extends javax.swing.JFrame {
      * Creates new form FrmLogin
      */
     
+    Usuario usuario = Usuario.getInstance();
+    
     int cont = 1;
     public FrmLogin() {
         initComponents();
@@ -177,13 +179,14 @@ public class FrmLogin extends javax.swing.JFrame {
         usuVista = usuarioTxt.getText();
         passVista = passwordTxt.getText();
         
-        Usuario usuario = new Usuario(0);
+        
         usuario.setUsuario(usuVista);
         usuario.setPassword(passVista);
         
         
         ControlUsuarios cu = new ControlUsuarios();
         DefaultTableModel listaUsuarios = cu.validarUsuario(usuario);
+        
         
         lblIntento.setText(String.valueOf(cont));
         
@@ -201,12 +204,23 @@ public class FrmLogin extends javax.swing.JFrame {
             
             if(listaUsuarios.getValueAt(0, 2).toString().equals(usuario.getPassword())){
                 String usuarioSesion = usuario.getUsuario();
+                System.out.println(usuario.getUsuario());
+                String idUser = listaUsuarios.getValueAt(0,0).toString();
+                
+                int idUserInt = Integer.valueOf(idUser);
+                
+                usuario.setIdusuario(idUserInt);
+
+                String tipo = listaUsuarios.getValueAt(0,4).toString();
+                usuario.setTipo(tipo);
                 
                 this.setVisible(false);
                 
                 FrmInicio fi = new FrmInicio();
                 FrmInicio.usuarioSesionTxt.setText(usuarioSesion) ;
                 fi.setVisible(true);
+                
+
             }else{
                 JOptionPane.showMessageDialog(this,"No coincide el password");
                 cont ++;

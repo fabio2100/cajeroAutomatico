@@ -10,12 +10,15 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Destinatarios;
 import modelo.Usuario;
+import modelo.UsuarioSingleton;
 
 /**
  *
  * @author Usuario
  */
 public class FrmADestinatarios extends javax.swing.JFrame {
+    //Recuperación del usuarioSingleton
+    UsuarioSingleton uSing = UsuarioSingleton.getInstance();
 
     /**
      * Creates new form FrmADestinatarios
@@ -288,7 +291,8 @@ public class FrmADestinatarios extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //Botón volver: Cierra la ventana y abre un nuevo FrmTransferencia
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -296,7 +300,10 @@ public class FrmADestinatarios extends javax.swing.JFrame {
         frmTransferencia.lblUsuario.setText(lblUsuario.getText());
         frmTransferencia.setVisible(true);
     }//GEN-LAST:event_btnVolverActionPerformed
-
+    
+    //Botón eliminar: Toma el valor del primer elemento de la fila de la tabla seleccionada. Luego crea un nuevo ControlDestinatarios
+    //y llama al método eliminarDestinatario, pasando el valor antes mencionado como parámetro.
+    //Finalmente, comprueba el valor booleano recibido de eliminarDestinatario y advierte si fue existoso o no.
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         String iddestinatarios = String.valueOf(tablaDestinatario.getValueAt(tablaDestinatario.getSelectedRow(),0));
@@ -308,14 +315,18 @@ public class FrmADestinatarios extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Error, no se pudo eliminar el destinatario");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
-
+    
+    //Botón agregar destinatario: Cierra la ventana y llama a FrmAgregarDestinatario
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         FrmAgregarDestinatario frmAgregarDestinatario = new FrmAgregarDestinatario();
         frmAgregarDestinatario.lblUsuario.setText(lblUsuario.getText());
         frmAgregarDestinatario.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    
+    //Evento al cliquear en algún valor de la tabla: Toma los valores de la fila seleccionada
     private void tablaDestinatarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaDestinatarioMouseClicked
         // TODO add your handling code here:
         String iddestinatarios = String.valueOf(tablaDestinatario.getValueAt(tablaDestinatario.getSelectedRow(),0));
@@ -329,7 +340,9 @@ public class FrmADestinatarios extends javax.swing.JFrame {
         txtFieldCuentaAcreditar.setText(cbu);
         
     }//GEN-LAST:event_tablaDestinatarioMouseClicked
-
+    
+    //Botón modificar: Toma los valores de la fila seleccionada. Crea un nuevo FrmModificar tabla y asigna esos valores 
+    //seleccionados a los diferentes labels o textFields. 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         String iddestinatarios = String.valueOf(tablaDestinatario.getValueAt(tablaDestinatario.getSelectedRow(),0));
@@ -410,16 +423,18 @@ public class FrmADestinatarios extends javax.swing.JFrame {
     private javax.swing.JTextField txtFieldImporte;
     // End of variables declaration//GEN-END:variables
     
+    
+    //Método que coloca en la tabla la tabla devuelta por listarDestinatarios de ControlDestinatarios
     private void actualizaDestinatarios(){
         DefaultTableModel listaDestinatarios;
-        Usuario usuario = Usuario.getInstance();
+        
         ControlDestinatarios cd = new ControlDestinatarios();
-        listaDestinatarios = cd.listarDestinatarios(usuario.getUsuario());
+        listaDestinatarios = cd.listarDestinatarios(uSing.getUsuario());
         
         tablaDestinatario.setModel(listaDestinatarios);
     }
     
-    
+    //Método que oculta columnas de la tabla en la vista. 
     private void ocultarCampos(){
         tablaDestinatario.getColumnModel().getColumn(0).setMaxWidth(0);
         tablaDestinatario.getColumnModel().getColumn(0).setMinWidth(0);
@@ -435,9 +450,10 @@ public class FrmADestinatarios extends javax.swing.JFrame {
     
     }
     
+    //Coloca en el lblCuentaDebitar el valor del usuarioSingleton getUsuario. 
     private void actualizaDebitar(){
-        Usuario usuario = Usuario.getInstance();
-        lblCuentaDebitar.setText((usuario.getUsuario()));
+        
+        lblCuentaDebitar.setText((uSing.getUsuario()));
     }
 
 

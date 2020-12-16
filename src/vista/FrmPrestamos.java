@@ -8,13 +8,15 @@ package vista;
 import controlador.ControlPrestamos;
 import javax.swing.table.DefaultTableModel;
 import modelo.Usuario;
+import modelo.UsuarioSingleton;
 
 /**
  *
  * @author Usuario
  */
 public class FrmPrestamos extends javax.swing.JFrame {
-    Usuario usuario = Usuario.getInstance();
+    //Recupera usuarioSingleton
+    UsuarioSingleton uSing = UsuarioSingleton.getInstance();
     
 
     /**
@@ -23,7 +25,7 @@ public class FrmPrestamos extends javax.swing.JFrame {
     public FrmPrestamos() {
         
         initComponents();
-        lblUsuario.setText(usuario.getUsuario());
+        lblUsuario.setText(uSing.getUsuario());
        
         actualizaCuentas();
         
@@ -244,12 +246,14 @@ public class FrmPrestamos extends javax.swing.JFrame {
     private void txtFieldMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldMontoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFieldMontoActionPerformed
-
+    
+    //cierra la ventana 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    //Click en tabla: Llama a método actualizaPrestamos()
     private void tableCuentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCuentasMouseClicked
         // TODO add your handling code here:
         actualizaPrestamos();
@@ -312,15 +316,17 @@ public class FrmPrestamos extends javax.swing.JFrame {
     private javax.swing.JTextField txtFieldDetalle;
     private javax.swing.JTextField txtFieldMonto;
     // End of variables declaration//GEN-END:variables
-
+    
+    //LLena la tabla con los valores obtenidos de la bbdd 
     private void actualizaCuentas() {
         DefaultTableModel listaCuentas;
-        System.out.println(usuario.getIdusuario());
-        listaCuentas = ControlPrestamos.listarCuentas(usuario.getIdusuario());
+        
+        listaCuentas = ControlPrestamos.listarCuentas(uSing.getIdusuario());
         
         tableCuentas.setModel(listaCuentas);
     }
     
+    //Obtiene los valores de la fila seleccionada y se los asigna al panel inferior
     private void actualizaPrestamos(){
         String nroCuenta = String.valueOf(tableCuentas.getValueAt(tableCuentas.getSelectedRow(),1));
         String banco = String.valueOf(tableCuentas.getValueAt(tableCuentas.getSelectedRow(),9));
@@ -331,6 +337,7 @@ public class FrmPrestamos extends javax.swing.JFrame {
         lblSaldo.setText("$ "+saldo);
     }
     
+    //Oculta columnas de la tabla. 
     private void ocultaCampos(){
         tableCuentas.getColumnModel().getColumn(0).setMaxWidth(0);
         tableCuentas.getColumnModel().getColumn(0).setMinWidth(0);

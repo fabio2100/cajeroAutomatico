@@ -5,16 +5,19 @@
  */
 package vista;
 
+import controlador.ControlCuentas;
 import controlador.ControlPrestamos;
 import javax.swing.table.DefaultTableModel;
 import modelo.Usuario;
+import modelo.UsuarioSingleton;
 
 /**
  *
  * @author Usuario
  */
 public class FrmCuentas extends javax.swing.JFrame {
-    Usuario usuario = Usuario.getInstance();
+    //recupera usuarioSingleton
+    UsuarioSingleton uSing = UsuarioSingleton.getInstance();
     /**
      * Creates new form FrmCuentas
      */
@@ -23,7 +26,8 @@ public class FrmCuentas extends javax.swing.JFrame {
         actualizaUsuario();
         actualizaCuentas();
         ocultaCampos();
-        if (usuario.getTipo().equals("usuario")){
+        //Comprueba si el tipo de usuario es usuario para invisibilizar el panel que contiene el menú
+        if (uSing.getTipo().equals("usuario")){
             panelMenu.setVisible(false);
         }
     }
@@ -131,8 +135,18 @@ public class FrmCuentas extends javax.swing.JFrame {
         });
 
         btnModificar.setText("Modificar cuenta");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar cuenta");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
         panelMenu.setLayout(panelMenuLayout);
@@ -184,17 +198,38 @@ public class FrmCuentas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    //Cierrra y devuelve a frame anterior 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // TODO add your handling code here:
+        FrmInicio frmInicio = new FrmInicio();
         this.dispose();
+        frmInicio.setVisible(true);
     }//GEN-LAST:event_btnVolverActionPerformed
-
+    
+    //cierra y pasa a frmAgregarCuenta
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         FrmAgregarCuenta frmAgregarCuenta = new FrmAgregarCuenta();
+        this.dispose();
         frmAgregarCuenta.setVisible(true);
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    
+    //Cierra y pasa a frmTablaaModificar
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        FrmTablaAModificar frmTablaAModificar = new FrmTablaAModificar();
+        this.dispose();
+        frmTablaAModificar.setVisible(true);
+    }//GEN-LAST:event_btnModificarActionPerformed
+    
+    //Cierra y pasa a frmTablaaEliminar
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        FrmTablaAEliminar frmTablaAEliminar = new FrmTablaAEliminar();
+        this.dispose();
+        frmTablaAEliminar.setVisible(true);
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -244,20 +279,23 @@ public class FrmCuentas extends javax.swing.JFrame {
     private javax.swing.JPanel panelMenu;
     private javax.swing.JTable tablaCuentas;
     // End of variables declaration//GEN-END:variables
-
+    
+    
+    //actualiza el lableUsuario
     private void actualizaUsuario(){
-        lblUsuario.setText(usuario.getUsuario());
+        lblUsuario.setText(uSing.getUsuario());
     }
     
-    
+    //Lista las cuentas disponibles para este usuario en particular. 
     private void actualizaCuentas(){
         DefaultTableModel listaCuentas;
-        listaCuentas = ControlPrestamos.listarCuentas(usuario.getIdusuario());
+        listaCuentas = ControlPrestamos.listarCuentas(uSing.getIdusuario());
         
         tablaCuentas.setModel(listaCuentas);
     
     }
     
+    //Oculta columnas de la tabla. 
     private void ocultaCampos(){
         tablaCuentas.getColumnModel().getColumn(0).setMaxWidth(0);
         tablaCuentas.getColumnModel().getColumn(0).setMinWidth(0);

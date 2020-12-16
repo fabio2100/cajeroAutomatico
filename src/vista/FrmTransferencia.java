@@ -139,7 +139,8 @@ public class FrmTransferencia extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //btn A Destinatarios: Cierra la ventana y pasa a frmADestinatarios. 
     private void btnADestinatarios1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnADestinatarios1ActionPerformed
         // TODO add your handling code here:
         this.dispose();
@@ -147,14 +148,16 @@ public class FrmTransferencia extends javax.swing.JFrame {
         frmADestinatarios.lblUsuario.setText(lblUsuario.getText());
         frmADestinatarios.setVisible(true);
     }//GEN-LAST:event_btnADestinatarios1ActionPerformed
-
+    
+    //btn volver: Devuelve a frame anterior
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // TODO add your handling code here:
         this.dispose();
         FrmInicio fi = new FrmInicio();
         fi.setVisible(true);
     }//GEN-LAST:event_btnVolverActionPerformed
-
+    
+    //btn Transferencia simple: Cierra la ventana y pasa a frmSimple 
     private void btnSimple1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimple1ActionPerformed
         // TODO add your handling code here:
         this.dispose();

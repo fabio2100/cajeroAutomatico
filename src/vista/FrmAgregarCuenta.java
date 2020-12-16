@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -6,11 +6,13 @@
 package vista;
 
 import controlador.ControlCuentas;
+import java.util.Date;
 import java.util.HashSet;
 import javax.swing.JOptionPane;
 import modelo.Banco;
 import modelo.Cuenta;
 import modelo.Usuario;
+import modelo.UsuarioSingleton;
 import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 /**
@@ -18,14 +20,16 @@ import org.eclipse.persistence.jpa.jpql.parser.DateTime;
  * @author Usuario
  */
 public class FrmAgregarCuenta extends javax.swing.JFrame {
-    Usuario usuario = Usuario.getInstance();
+    //Recupera usuario singleton
+    UsuarioSingleton uSing = UsuarioSingleton.getInstance();
 
     /**
      * Creates new form FrmAgregarCuenta
      */
     public FrmAgregarCuenta() {
         initComponents();
-        lblUsuario.setText(usuario.getUsuario());
+        //coloca en el label usuario lo devuelto por en usuario singleton
+        lblUsuario.setText(uSing.getUsuario());
     }
 
     /**
@@ -180,26 +184,48 @@ public class FrmAgregarCuenta extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    
+    //Botón volver, cierra la ventana y crea un nuevo FrmCuenta
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
         // TODO add your handling code here:
+        FrmCuentas frmCuentas = new FrmCuentas();
         this.dispose();
+        frmCuentas.setVisible(true);
     }//GEN-LAST:event_btnVolverActionPerformed
-
+    
+    
+    /*Botón agregar cuenta: toma los valores de los txtFields y labels,
+    llama, crea banco y usuario para enviar los tipos correspondientes, 
+    asigna fecha en tipo sql, llama a ControlCuentas.agregarCuenta(cuenta), pasándole como 
+    parámetro la cuenta creada, y finalmente crea una ventana con el éxito o fracaso de la operación
+    */
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
         String nroDeCuenta = txtFieldNroCuenta.getText();
         double saldo = Double.valueOf(txtFieldSaldoInicial.getText());
         int idBanco = Integer.valueOf(txtFieldIdBanco.getText());
         int idUsuario = Integer.valueOf(txtFieldIdUsuario.getText());
-        int usuarioAlta = usuario.getIdusuario();
+        int usuarioAlta = uSing.getIdusuario();
         
         Cuenta cuenta = new Cuenta();
         cuenta.setNrodecuenta(nroDeCuenta);
         cuenta.setSaldo(saldo);
-        cuenta.setIdbanco(idBanco);
-        cuenta.setIdusuario(idUsuario);
+        
+        
+        Banco banco = new Banco();
+        banco.setIdbanco(idBanco);       
+        cuenta.setIdbanco(banco);
+        
+        Usuario usuario = new Usuario();
+        usuario.setIdusuario(idUsuario);
+        cuenta.setIdusuario(usuario);
         cuenta.setUsuarioalta(usuarioAlta);
+        
+        Date fecha = new Date();
+        java.sql.Date fechaAlta = new java.sql.Date(fecha.getTime());
+        cuenta.setFechaalta(fechaAlta);
+        
         boolean res = ControlCuentas.AgregarCuenta(cuenta);
         if (res){
             JOptionPane.showMessageDialog(this, "Cuenta creada correctamente");
@@ -207,6 +233,8 @@ public class FrmAgregarCuenta extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No se pudo agregar la cuenta");
         }
         this.dispose();
+        FrmCuentas frmCuentas = new FrmCuentas();
+        frmCuentas.setVisible(true);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     /**

@@ -6,9 +6,15 @@
 package vista;
 
 import controlador.ControlUsuarios;
+import controlador.SHA1;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Usuario;
+import modelo.UsuarioSingleton;
 
 
 /**
@@ -21,8 +27,8 @@ public class FrmLogin extends javax.swing.JFrame {
      * Creates new form FrmLogin
      */
     
-    Usuario usuario = Usuario.getInstance();
     
+    //Inicialización del contador
     int cont = 1;
     public FrmLogin() {
         initComponents();
@@ -165,12 +171,16 @@ public class FrmLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    
+    //Botón cerrar: Cierra el sistema
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_btnCerrarActionPerformed
 
+    
+    //Botón ingresar: Toma datos de los escrito en usuario y password
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
         String usuVista;
@@ -180,32 +190,47 @@ public class FrmLogin extends javax.swing.JFrame {
         passVista = passwordTxt.getText();
         
         
+        //Creación de usuario, se setea el usuario
+        Usuario usuario = new Usuario();
+        
         usuario.setUsuario(usuVista);
-        usuario.setPassword(passVista);
         
+        //Encriptación del password
+        String passEncriptado = null;
+        try {
+            passEncriptado = SHA1.SHA1(passVista);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ControlUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(ControlUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
+        //Se llama a ControlUsuarios para chequear en base de datos si lo ingresado corresponde a un usuario registrado
         ControlUsuarios cu = new ControlUsuarios();
         DefaultTableModel listaUsuarios = cu.validarUsuario(usuario);
         
         
         lblIntento.setText(String.valueOf(cont));
         
+        //Se cuentan la cantidad de filas encontradas, para corroborar si hay usuario registrado con ese nombre
         int nroFilas = listaUsuarios.getRowCount();
-        
+            
         if (nroFilas == 0){
             JOptionPane.showMessageDialog(this,"No hay usuario registrado");
         }else{
+            
+            //Se comprueba que el usuario no esté baneado, en caso que sí se muestra ventana y cierra el programa
             if (listaUsuarios.getValueAt(0,3).toString().equals("true")){
                 JOptionPane.showMessageDialog(this,"El usuario se encuentra baneado, por favor contacte al administrador");
                 //this.dispose();
                 System.exit(0);
             }
             
-            
-            if(listaUsuarios.getValueAt(0, 2).toString().equals(usuario.getPassword())){
+            //Si hay usuarios registrados se comprueba que el password coincida con el almacenado(encriptados ambos)
+            if(listaUsuarios.getValueAt(0, 2).toString().equals(passEncriptado)){
                 String usuarioSesion = usuario.getUsuario();
-                System.out.println(usuario.getUsuario());
                 String idUser = listaUsuarios.getValueAt(0,0).toString();
+                usuario.setPassword(passEncriptado);
                 
                 int idUserInt = Integer.valueOf(idUser);
                 
@@ -216,19 +241,30 @@ public class FrmLogin extends javax.swing.JFrame {
                 
                 this.setVisible(false);
                 
+                
+                //Se crea una clase usuarioSingleton, idéntica a usuario pero de tipo singleton que permite almacenar los valores del usuario en sesión para recuperarlos en otros frames
+                UsuarioSingleton uSing=UsuarioSingleton.getInstance();
+                uSing.setIdusuario(idUserInt);
+                uSing.setUsuario(usuVista);
+                uSing.setTipo(tipo);
+                
+                //Se cambia al frame FrmInicio
                 FrmInicio fi = new FrmInicio();
                 FrmInicio.usuarioSesionTxt.setText(usuarioSesion) ;
                 fi.setVisible(true);
                 
-
+                
+                
+                
             }else{
+                //En caso de no coincidir el password, se itera contador hasta llegar a tres intentos. Al tercer intento de password incorrecto, se llama al método banearUsuario de controlUsuarios
                 JOptionPane.showMessageDialog(this,"No coincide el password");
                 cont ++;
                 if (cont > 3){
                     boolean ban = cu.banearUsuario(usuVista);
-                    if (ban == true){
+                    if (ban){
                         JOptionPane.showMessageDialog(this,"Usuario baneado");
-                        this.dispose();}
+                        System.exit(0);}
                     
                 }
             }

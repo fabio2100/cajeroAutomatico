@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Usuario
  */
 @Entity
-@Table(name = "usuario", catalog = "cajeroautomatico", schema = "")
+@Table(name = "usuario")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
@@ -40,8 +40,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByDni", query = "SELECT u FROM Usuario u WHERE u.dni = :dni")
     , @NamedQuery(name = "Usuario.findByCelular", query = "SELECT u FROM Usuario u WHERE u.celular = :celular")})
 public class Usuario implements Serializable {
-    
-    private static Usuario instance ;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -50,7 +48,7 @@ public class Usuario implements Serializable {
     @Column(name = "idusuario")
     private Integer idusuario;
     @Column(name = "usuario")
-    static String usuario;
+    private String usuario;
     @Column(name = "password")
     private String password;
     @Column(name = "banned")
@@ -68,7 +66,7 @@ public class Usuario implements Serializable {
     @OneToMany(mappedBy = "idusuario", fetch = FetchType.LAZY)
     private List<Cuenta> cuentaList;
 
-    private Usuario() {
+    public Usuario() {
     }
 
     public Usuario(Integer idusuario) {
@@ -181,12 +179,4 @@ public class Usuario implements Serializable {
         return "modelo.Usuario[ idusuario=" + idusuario + " ]";
     }
     
-    
-    //Método getInstance
-    public static Usuario getInstance(){
-        if (instance == null){
-            instance = new Usuario();}
-        else{
-            System.out.println("Ya ha sido creado un objeto usuario");}
-        return instance;}
 }

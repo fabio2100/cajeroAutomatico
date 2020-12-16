@@ -158,12 +158,19 @@ public class FrmAgregarDestinatario extends javax.swing.JFrame {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_txtFieldCbuActionPerformed
-
+    /*botón cerrar: Cierra la ventana y crea un nuevo FrmADestinatarios.*/
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         // TODO add your handling code here:
+        FrmADestinatarios frmADestinatarios = new FrmADestinatarios();
         this.dispose();
+        frmADestinatarios.setVisible(true);
     }//GEN-LAST:event_btnCerrarActionPerformed
-
+    
+    /* 
+    Botón guardar: Toma los valores de los text fields, crea un nuevo controlDestinatarios,
+    un nuevo objeto destinatarios y envía éste a controlDestinatarios.guardarDestinatario, finalmente
+    muestra el resultado de la operación
+    */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         String cbu = txtFieldCbu.getText();

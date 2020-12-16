@@ -18,10 +18,14 @@ import modelo.Destinatarios;
 
 /**
  *
- * @author Usuario
+ * @author Fabio
+ * Clase que contiene métodos que involucran a la tabla destinatarios de la bbdd 
  */
 public class ControlDestinatarios {
     final DefaultTableModel listaDestinatario = new DefaultTableModel(99,8);
+    /*
+    Método que recibe como parámetro a un destinatario y lo inserta en la bbdd 
+    */
     public boolean guardarDestinatario(Destinatarios desti){
         BaseDatos db = new BaseDatos();
         Connection cnx = db.estableceConexion();
@@ -48,7 +52,11 @@ public class ControlDestinatarios {
         }
     }
     
-    
+    /*
+    Método que recibe como argumento un nombre de usuario y devuelve un defaultTableModel con 
+    todos los destinatarios que tiene este nombre de usuario. A diferencia de los otros métodos
+    que listan desde la bbdd, este recibe un argumento que usa como condición en la consulta. 
+    */
     public DefaultTableModel listarDestinatarios(String nombreUsuario){
         BaseDatos bd = new BaseDatos();
         Connection cnx = bd.estableceConexion();
@@ -69,6 +77,10 @@ public class ControlDestinatarios {
     
     }
 
+    
+    /*
+    Método que recibe un destinatario y lo actualiza en la bbdd 
+    */
     public boolean modificarDestinatario(Destinatarios desti) {
         BaseDatos db = new BaseDatos();
         Connection cnx = db.estableceConexion();
@@ -95,8 +107,12 @@ public class ControlDestinatarios {
         }
     }
 
+    
+    /*
+    Método que recibe un string con el id del destinatario y usa este para eliminarlo de la bbdd
+    */
     public boolean eliminarDestinatario(String iddestinatarios) {
-               BaseDatos db = new BaseDatos();
+        BaseDatos db = new BaseDatos();
         Connection cnx = db.estableceConexion();
         
         try{

@@ -13,10 +13,16 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Usuario
+ * @author Fabio
+ * Clase que contiene un solo método  
  */
 public class ControlPrestamos {
     final static DefaultTableModel listaCuentas = new DefaultTableModel(99,8);
+    
+    /*
+    Método que devuelve un defaultablemodel con todos las cuentas correspondientes a un usuario determinado
+    que es el que se pasa como argumento 
+    */
     public static DefaultTableModel listarCuentas(int idUsuario){
         BaseDatos bd = new BaseDatos();
         Connection cnx = bd.estableceConexion();

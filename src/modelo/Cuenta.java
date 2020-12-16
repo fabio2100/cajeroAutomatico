@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Usuario
  */
 @Entity
-@Table(name = "cuenta", catalog = "cajeroautomatico", schema = "")
+@Table(name = "cuenta")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Cuenta.findAll", query = "SELECT c FROM Cuenta c")
@@ -80,10 +80,10 @@ public class Cuenta implements Serializable {
     private List<Movimiento> movimientoList;
     @JoinColumn(name = "idbanco", referencedColumnName = "idbanco")
     @ManyToOne(fetch = FetchType.LAZY)
-    private int idbanco;
+    private Banco idbanco;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
     @ManyToOne(fetch = FetchType.LAZY)
-    private int idusuario;
+    private Usuario idusuario;
     @OneToMany(mappedBy = "idcuenta", fetch = FetchType.LAZY)
     private List<Pago> pagoList;
 
@@ -193,19 +193,19 @@ public class Cuenta implements Serializable {
         this.movimientoList = movimientoList;
     }
 
-    public int getIdbanco() {
+    public Banco getIdbanco() {
         return idbanco;
     }
 
-    public void setIdbanco(int idbanco) {
+    public void setIdbanco(Banco idbanco) {
         this.idbanco = idbanco;
     }
 
-    public int getIdusuario() {
+    public Usuario getIdusuario() {
         return idusuario;
     }
 
-    public void setIdusuario(int idusuario) {
+    public void setIdusuario(Usuario idusuario) {
         this.idusuario = idusuario;
     }
 

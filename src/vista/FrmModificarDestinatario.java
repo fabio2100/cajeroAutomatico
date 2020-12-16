@@ -11,20 +11,23 @@ import javax.swing.JOptionPane;
 import modelo.Destinatarios;
 import modelo.Transferencia;
 import modelo.Usuario;
+import modelo.UsuarioSingleton;
 
 /**
  *
  * @author Usuario
  */
 public class FrmModificarDestinatario extends javax.swing.JFrame {
+    //Recupera singleton usuario. 
+    UsuarioSingleton uSing = UsuarioSingleton.getInstance();
 
     /**
      * Creates new form FrmModificarDestinatario
      */
     public FrmModificarDestinatario() {
         initComponents();
-        Usuario usuario = Usuario.getInstance();
-        lblUsuario.setText(usuario.getUsuario());
+        
+        lblUsuario.setText(uSing.getUsuario());
     }
 
     /**
@@ -179,12 +182,18 @@ public class FrmModificarDestinatario extends javax.swing.JFrame {
     private void txtFieldCbuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFieldCbuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFieldCbuActionPerformed
-
+    
+    //btncerrar: Cierra la ventana. 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnCerrarActionPerformed
-
+    
+    /*
+    btn guardar: toma los valores de los textfields y los asigna a un nuevo objeto 
+    destinatario. Usa como parámetro a éste de controlDestinatario.modificarDestinatario()
+    Finalmente advierte resultado de la operación
+    */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         String cbu = txtFieldCbu.getText();
